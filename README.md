@@ -1,3 +1,4 @@
+# Daily_Planner
 Certainly! Here's an expanded section in the README file that describes all the functions of the program along with explanations of its features:
 
 ---
@@ -66,12 +67,9 @@ We welcome your feedback and contributions to improve the Daily Planner App. Ple
 
 For more information, contact [mohamed22ashraf21@gmail.com](mailto:mohamed22ashraf21@gmail.com).
 
----
-
-*Note: Replace "mohamed22ashraf21@gmail.com" with your actual email address.*
 
 ---
 
-We hope you find the Daily Planner App an invaluable tool for maintaining productivity and organizing your tasks effectively!
+I hope you find the Daily Planner App an invaluable tool for maintaining productivity and organizing your tasks effectively!
 
 ---
