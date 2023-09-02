@@ -14,8 +14,9 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
-from tkinter import N, S, E, W, CENTER
+from tkinter import N, S, E, W
 from datetime import datetime
+
 
 class DailyPlannerApp:
     def __init__(self, root):
@@ -56,14 +57,10 @@ class DailyPlannerApp:
         self.update_goal_table()
         self.update_task_table()
 
-
-
     def create_task_frame(self):
         task_frame = ttk.LabelFrame(self.root, text="Add Task")
         task_frame.pack(padx=10, pady=10, fill="both", expand="True", side="left")
-        
-    
-        
+
         task_name_label = ttk.Label(task_frame, text="Task Name:")
         task_name_label.grid(row=0, column=0, padx=10, pady=5, sticky="e")
 
@@ -117,8 +114,6 @@ class DailyPlannerApp:
     def create_pdf_frame(self):
         pdf_frame = ttk.LabelFrame(self.root, text="PDF Actions")
         pdf_frame.pack(padx=10, pady=10, fill="both", expand="True")
-
-
 
         self.save_pdf_button = ttk.Button(
             pdf_frame, text="Save as PDF", command=self.save_as_pdf
@@ -176,7 +171,7 @@ class DailyPlannerApp:
                 "",
                 "end",
                 values=(
-                    task_info['frequency'],
+                    task_info["frequency"],
                     task_info["task"],
                     task_info["due_date"],
                     task_info.get("schedule"),
@@ -199,7 +194,9 @@ class DailyPlannerApp:
         frequency = item["values"][0]
         task = item["values"][1]  # Change to index 1 to get the task name
 
-        if frequency in self.tasks and any(task_info["task"] == task for task_info in self.tasks[frequency]):
+        if frequency in self.tasks and any(
+            task_info["task"] == task for task_info in self.tasks[frequency]
+        ):
             for task_info in self.tasks[frequency]:
                 if task_info["task"] == task:
                     self.tasks[frequency].remove(task_info)
@@ -207,7 +204,8 @@ class DailyPlannerApp:
                     return
         else:
             messagebox.showwarning(
-                "Task Not Found", "The selected task was not found in the specified frequency."
+                "Task Not Found",
+                "The selected task was not found in the specified frequency.",
             )
 
     def delete_goal(self):
@@ -389,13 +387,10 @@ class DailyPlannerApp:
         # Spacer
         story.append(Spacer(1, 20))  # Adds 20 units of vertical space
 
-
-
-
         # Add a title above the goal table
         goal_title = Paragraph("Goals", getSampleStyleSheet()["Heading1"])
         story.append(goal_title)
-    
+
         # Goals Table
         goal_data = [["Goal Type", "Goal"]]
         for goal_type, goals_list in self.goals.items():
@@ -520,15 +515,14 @@ class DailyPlannerApp:
 
         # Create a separate frame for the goal table
         goal_table_frame = ttk.Frame(goal_frame)
-        goal_table_frame.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky=(N, S, E, W))
+        goal_table_frame.grid(
+            row=3, column=0, columnspan=2, padx=10, pady=10, sticky=(N, S, E, W)
+        )
 
         # Center the goal table frame contents
         goal_table_frame.columnconfigure(0, weight=1)
         goal_table_frame.rowconfigure(0, weight=1)
 
-
-
-    
         # Goal Table
         self.goal_table = ttk.Treeview(
             goal_table_frame, columns=("Goal Type", "Goal"), show="headings"
@@ -536,20 +530,15 @@ class DailyPlannerApp:
         self.goal_table.heading("Goal Type", text="Goal Type")
         self.goal_table.heading("Goal", text="Goal")
 
-
         self.goal_table.column("Goal Type", width=300)
         self.goal_table.column("Goal", width=300)
-        
+
         self.goal_table.pack(fill="both", expand=True, padx=5, pady=5)
-
-       
-
 
         self.delete_goal_button = ttk.Button(
             goal_frame, text="Delete Goal", command=self.delete_goal
         )
         self.delete_goal_button.grid(row=4, column=0, columnspan=2, padx=10, pady=5)
-
 
     def update_goal_table(self):
         self.goal_table.delete(*self.goal_table.get_children())
