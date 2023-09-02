@@ -15,7 +15,7 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
 from tkinter import N, S, E, W, CENTER
-
+from datetime import datetime
 
 class DailyPlannerApp:
     def __init__(self, root):
@@ -176,7 +176,7 @@ class DailyPlannerApp:
                 "",
                 "end",
                 values=(
-                    frequency,
+                    task_info['frequency'],
                     task_info["task"],
                     task_info["due_date"],
                     task_info.get("schedule"),
@@ -196,14 +196,19 @@ class DailyPlannerApp:
             return
 
         item = self.task_table.item(selected_item)
-        frequency = item["values"][2]
-        task = item["values"][0]
+        frequency = item["values"][0]
+        task = item["values"][1]  # Change to index 1 to get the task name
 
-        for task_info in self.tasks[frequency]:
-            if task_info["task"] == task:
-                self.tasks[frequency].remove(task_info)
-                self.update_task_table()
-                return
+        if frequency in self.tasks and any(task_info["task"] == task for task_info in self.tasks[frequency]):
+            for task_info in self.tasks[frequency]:
+                if task_info["task"] == task:
+                    self.tasks[frequency].remove(task_info)
+                    self.update_task_table()
+                    return
+        else:
+            messagebox.showwarning(
+                "Task Not Found", "The selected task was not found in the specified frequency."
+            )
 
     def delete_goal(self):
         selected_item = self.goal_table.selection()
