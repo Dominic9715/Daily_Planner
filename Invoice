@@ -1,0 +1,83 @@
+from datetime import datetime
+
+from collections import defaultdict
+
+
+
+# Define the daily rate
+
+daily_rate = 10000
+
+
+
+# List of work entries with dates
+
+work_entries = [
+
+    ("26/4/25", "6 joints for 225mm pipes"),
+
+    ("28/4/25", "7 joints for 225mm pipes, 2 joints for 90mm"),
+
+    ("29/4/25", "2 joints reducer for 110mm to 90mm, 4 joints for 225mm pipes"),
+
+    ("30/4/25", "6 joints for 225mm pipes"),
+
+    ("1/5/25", "3 joints for 225mm pipes"),
+
+    ("2/5/25", "5 joints for 225mm pipes"),
+
+    ("3/5/25", "1 joint for 90mm, 2 joints for 225mm pipes"),
+
+    ("5/5/25", "1 joint for 225mm pipes, 1 joint for 110mm pipes, joints for 160mm pipes"),
+
+    ("6/5/25", "4 joints for 160mm pipes, 3 t joints for 225mm pipes"),
+
+    ("7/5/25", "8 joints for 160mm pipes, 3 joints for 225mm pipes"),
+
+    ("8/5/25", "6 joints for 160mm pipes, 2 joints for reducer 160mm to 110mm, 2 joints for 110mm pipes"),
+
+    ("9/5/25", "5 joints for 110mm pipes"),
+
+    ("10/5/25", "5 joints for 110mm pipes"),
+
+    ("13/5/25", "4 joints for 110mm pipes"),
+
+    ("14/5/25", "6 joints for 110mm pipes"),
+
+    ("15/5/25", "3 joints for 110mm pipes"),
+
+]
+
+
+
+# Count unique workdays
+
+unique_dates = {entry[0] for entry in work_entries}
+
+num_days = len(unique_dates)
+
+total_amount = num_days * daily_rate
+
+
+
+# Create a structured summary for the invoice
+
+daily_summary = defaultdict(list)
+
+for date_str, description in work_entries:
+
+    date_obj = datetime.strptime(date_str, "%d/%m/%y")
+
+    daily_summary[date_obj].append(description)
+
+
+
+# Sort the dates
+
+sorted_summary = sorted(daily_summary.items())
+
+
+
+num_days, total_amount, sorted_summary[:3]  # Showing the first 3 entries as a preview
+
+
